@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="{{APP_DISPLAY_NAME}}">
+
+  <!-- iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="{{APP_DISPLAY_NAME}}">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>{{APP_DISPLAY_NAME}}</title>
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; background: #ffffff; }
+    #splash {
+      position: fixed; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: {{PRIMARY_COLOR_CSS}};
+      color: white; font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 24px; font-weight: 600;
+      z-index: 999;
+    }
+  </style>
+
+  <!-- RaffleFast multi-tenant config — injected at build time by deploy.sh -->
+  <script>
+    window.RAFFLEFAST_CONFIG = {{CLIENT_CONFIG_JSON}};
+  </script>
+</head>
+<body>
+  <div id="splash">{{APP_DISPLAY_NAME}}</div>
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      const el = document.getElementById('splash');
+      if (el) el.remove();
+    });
+  </script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
