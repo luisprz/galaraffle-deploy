@@ -31,10 +31,20 @@
     }
   </style>
 
-  <!-- RaffleFast multi-tenant config — injected at build time by deploy.sh -->
-  <script>
-    window.RAFFLEFAST_CONFIG = {"client_id":"gala","client_name":"Gala Fresh Farms","app_display_name":"GalaRaffle","primary_color_hex":"0F9D58","domain":"raffle.galasupermarketsli.com","deploy_repo":"luisprz/galaraffle-deploy","deploy_branch":"main","supabase_url":"https://zkncxsqnovdizixplqal.supabase.co","supabase_anon_key":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InprbmN4c3Fub3ZkaXppeHBscWFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA1MTEyNzMsImV4cCI6MjA5NjA4NzI3M30.jtVBp2v9MHMVkELIjRB-XpRCHsQcHC7eHBJIVID49os","consent_text":"By signing up for Weekly Deals texts from Gala Fresh Farms, you agree to receive promotional marketing text messages such as Weekly Deals sent to your number via autodialer. Consent is not a condition of any purchase. Message frequency varies. Unsubscribe at any time by replying STOP. Message & data rates may apply.","raffle_title_default":"Gala Fresh Farms Raffle","splash_image_url":null,"icons":{"favicon":"assets/clients/gala/favicon.png","icon_192":"assets/clients/gala/icon-192.png","icon_512":"assets/clients/gala/icon-512.png"},"twilio":{"from_number":"+1XXXXXXXXXX","_comment":"These go in Supabase Edge Function secrets, not in this file. Listed here for documentation only."},"features":{"bulk_sms":true,"csv_export":true,"custom_splash":true,"live_dashboard":true,"offline_queue":true}};
-  </script>
+  <!--
+    RaffleFast multi-tenant client config (injected at build time by deploy.sh).
+
+    This uses the "JSON-in-DOM" pattern — same approach used by GitHub, Rails,
+    Next.js, etc. The browser does NOT execute this script (because of the
+    `application/json` type), so the JSON is just inert text that Dart reads
+    via `document.getElementById('rafflefast-config').text`.
+
+    Why not `window.RAFFLEFAST_CONFIG = {...}`? Because Dart compiled to JS
+    cannot reliably read JS object literals — they come back as opaque JS
+    objects that fail `is Map` checks. The DOM-text approach is portable,
+    simple, and impossible to get wrong.
+  -->
+  <script type="application/json" id="rafflefast-config">{"client_id":"gala","client_name":"Gala Fresh Farms","app_display_name":"GalaRaffle","primary_color_hex":"0F9D58","domain":"raffle.galasupermarketsli.com","deploy_repo":"luisprz/galaraffle-deploy","deploy_branch":"main","supabase_url":"https://zkncxsqnovdizixplqal.supabase.co","supabase_anon_key":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InprbmN4c3Fub3ZkaXppeHBscWFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA1MTEyNzMsImV4cCI6MjA5NjA4NzI3M30.jtVBp2v9MHMVkELIjRB-XpRCHsQcHC7eHBJIVID49os","consent_text":"By signing up for Weekly Deals texts from Gala Fresh Farms, you agree to receive promotional marketing text messages such as Weekly Deals sent to your number via autodialer. Consent is not a condition of any purchase. Message frequency varies. Unsubscribe at any time by replying STOP. Message & data rates may apply.","raffle_title_default":"Gala Fresh Farms Raffle","splash_image_url":null,"icons":{"favicon":"assets/clients/gala/favicon.png","icon_192":"assets/clients/gala/icon-192.png","icon_512":"assets/clients/gala/icon-512.png"},"twilio":{"from_number":"+1XXXXXXXXXX","_comment":"These go in Supabase Edge Function secrets, not in this file. Listed here for documentation only."},"features":{"bulk_sms":true,"csv_export":true,"custom_splash":true,"live_dashboard":true,"offline_queue":true}}</script>
 </head>
 <body>
   <div id="splash">GalaRaffle</div>

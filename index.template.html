@@ -31,10 +31,20 @@
     }
   </style>
 
-  <!-- RaffleFast multi-tenant config — injected at build time by deploy.sh -->
-  <script>
-    window.RAFFLEFAST_CONFIG = {{CLIENT_CONFIG_JSON}};
-  </script>
+  <!--
+    RaffleFast multi-tenant client config (injected at build time by deploy.sh).
+
+    This uses the "JSON-in-DOM" pattern — same approach used by GitHub, Rails,
+    Next.js, etc. The browser does NOT execute this script (because of the
+    `application/json` type), so the JSON is just inert text that Dart reads
+    via `document.getElementById('rafflefast-config').text`.
+
+    Why not `window.RAFFLEFAST_CONFIG = {...}`? Because Dart compiled to JS
+    cannot reliably read JS object literals — they come back as opaque JS
+    objects that fail `is Map` checks. The DOM-text approach is portable,
+    simple, and impossible to get wrong.
+  -->
+  <script type="application/json" id="rafflefast-config">{{CLIENT_CONFIG_JSON}}</script>
 </head>
 <body>
   <div id="splash">{{APP_DISPLAY_NAME}}</div>
